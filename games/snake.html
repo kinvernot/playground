@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <title>finvernot - Serpiente del Desierto (Niveles)</title>
+ <style>
+  body {
+   background-color: #f7e9d0;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+  }
+  h1 { margin-top: 20px; }
+  canvas {
+   background-color: #f3d19c;
+   margin-top: 10px;
+   border: 2px solid #333;
+  }
+  #score, #level {
+   font-size: 20px;
+   margin-top: 10px;
+  }
+ </style>
+<link rel="stylesheet" href="../assets/navigation.css">
+</head>
+<body>
+<a class="invernot-home" href="../index.html" aria-label="Volver al índice de la Familia Invernot">← Volver al inicio</a>
+
+<h1>finvernot - Serpiente del Desierto (Niveles)</h1>
+<div id="score">Puntuación: 0</div>
+<div id="level">Nivel: 1</div>
+<canvas id="gameCanvas" width="400" height="400"></canvas>
+
+<script>
+ const canvas = document.getElementById('gameCanvas');
+ const ctx = canvas.getContext('2d');
+ const box = 20;
+
+ let snake = [{x: 8*box, y: 8*box}];
+ let dir = '';
+ let score = 0;
+ let level = 1;
+ let speed = 200; // velocidad inicial en ms
+
+ let water = { x: Math.floor(Math.random()*20)*box, y: Math.floor(Math.random()*20)*box };
+ const cactus = [];
+ for(let i=0;i<10;i++){ cactus.push({x: Math.floor(Math.random()*20)*box, y: Math.floor(Math.random()*20)*box}); }
+
+ document.addEventListener('keydown', direction);
+ function direction(event){
+  if(event.key === 'ArrowUp' && dir != 'DOWN') dir = 'UP';
+  if(event.key === 'ArrowDown' && dir != 'UP') dir = 'DOWN';
+  if(event.key === 'ArrowLeft' && dir != 'RIGHT') dir = 'LEFT';
+  if(event.key === 'ArrowRight' && dir != 'LEFT') dir = 'RIGHT';
+ }
+
+ function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Dibujar serpiente
+  for(let i=0;i<snake.length;i++){
+   ctx.fillStyle = (i===0)?'green':'darkgreen';
+   ctx.fillRect(snake[i].x,snake[i].y,box,box);
+   ctx.strokeStyle = 'black';
+   ctx.strokeRect(snake[i].x,snake[i].y,box,box);
+  }
+
+  // Dibujar agua
+  ctx.fillStyle='blue';
+  ctx.fillRect(water.x, water.y, box, box);
+
+  // Dibujar cactus
+  ctx.fillStyle='darkred';
+  cactus.forEach(c=>ctx.fillRect(c.x,c.y,box,box));
+
+  let snakeX = snake[0].x;
+  let snakeY = snake[0].y;
+
+  if(dir==='LEFT') snakeX-=box;
+  if(dir==='RIGHT') snakeX+=box;
+  if(dir==='UP') snakeY-=box;
+  if(dir==='DOWN') snakeY+=box;
+
+  snake.unshift({x:snakeX, y:snakeY});
+
+  // Comprobar agua
+  if(snakeX===water.x && snakeY===water.y){
+   score++;
+   document.getElementById('score').innerText="Puntuación: "+score;
+   water = { x: Math.floor(Math.random()*20)*box, y: Math.floor(Math.random()*20)*box };
+
+   // Cada 5 puntos, aumentar nivel y velocidad
+   if(score % 5 === 0){
+    level++;
+    document.getElementById('level').innerText = "Nivel: "+level;
+    speed = Math.max(50, speed - 20); // más rápido, mínimo 50ms
+    clearInterval(gameLoop);
+    gameLoop = setInterval(draw, speed);
+   }
+  } else {
+   // Quitar cola si no crece
+   snake.pop();
+  }
+
+  // Colisiones cactus
+  cactus.forEach(c=>{
+   if(snakeX===c.x && snakeY===c.y){
+    dir = ['UP','DOWN','LEFT','RIGHT'][Math.floor(Math.random()*4)];
+   }
+  });
+
+  // Mantener dentro del canvas
+  if(snakeX<0) snake[0].x = canvas.width - box;
+  if(snakeX>=canvas.width) snake[0].x = 0;
+  if(snakeY<0) snake[0].y = canvas.height - box;
+  if(snakeY>=canvas.height) snake[0].y = 0;
+ }
+
+ // Iniciar juego
+ let gameLoop = setInterval(draw, speed);
+</script>
+</body>
+</html>
