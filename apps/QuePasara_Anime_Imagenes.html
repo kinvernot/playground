@@ -6,9 +6,11 @@
 
 .photo-avatar{width:88px;height:88px;object-fit:cover;border-radius:50%;border:3px solid #8affea;vertical-align:middle}.photo-preview{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:14px 0}.camera-box{border:1px solid #ffffff55;border-radius:18px;padding:16px;margin:16px 0;background:#ffffff0d}.camera-video{display:block;width:min(100%,420px);max-height:320px;border-radius:14px;margin:12px 0;transform:scaleX(-1)}.camera-actions{display:flex;gap:10px;flex-wrap:wrap}.camera-help{font-size:.9rem;color:#d8e3fa}
 </style><style>.anime-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0 24px}.anime-option{display:flex;align-items:center;flex-direction:column;gap:12px;text-align:center}.anime-frame{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;padding:6px;vertical-align:middle;position:relative}.anime-frame .photo-avatar{width:92px;height:92px}.anime-clasico{background:linear-gradient(135deg,#ffb6d5,#c4a5ff);box-shadow:0 0 22px #ffb6d566}.anime-aventura{background:linear-gradient(135deg,#ffdd77,#ff806d);box-shadow:0 0 22px #ffbb5590}.anime-fantasia{background:linear-gradient(135deg,#82e9ff,#a88cff,#f7a9ed);box-shadow:0 0 25px #a88cff99}.anime-clasico img{filter:saturate(1.2) contrast(1.08)}.anime-aventura img{filter:contrast(1.2) saturate(1.35)}.anime-fantasia img{filter:saturate(1.5) hue-rotate(8deg)}.anime-frame:after{content:'✦';position:absolute;top:-10px;right:-5px;color:#fff5b1;font-size:25px;text-shadow:0 0 7px #fff}.anime-aventura:after{content:'⚡'}.anime-fantasia:after{content:'✧'}.manga-result{width:170px;height:170px;object-fit:cover;border-radius:24px;border:4px solid #ffe58a;box-shadow:0 12px 25px #0005}.anime-option.selected{border-color:#ffe58a;background:#65406c}.anime-option .anime-frame{min-height:78px;min-width:78px}.anime-normal{background:#f7abc9}.anime-fantastico{background:#a58ef3}.anime-medieval{background:#d7ab70}.anime-aventurero{background:#7dbba5}</style><style>.scene-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,225px),1fr));gap:18px}.scene-choice{padding:0!important;overflow:hidden;display:flex;flex-direction:column;min-height:220px;border:3px solid #ffffff55!important;border-radius:20px!important;background:#182a54!important;box-shadow:0 9px 22px #0005;transition:transform .2s,border-color .2s}.scene-choice:hover{transform:translateY(-5px)}.scene-choice.selected{border-color:#ffdf67!important;box-shadow:0 0 0 3px #ffdf6780}.scene-art{width:100%;aspect-ratio:360/220;object-fit:cover;display:block}.scene-label{padding:14px 12px;display:block;width:100%;font-size:1.06rem;font-weight:750;text-align:center;color:#fff}.scene-choice:focus-visible{outline:4px solid #fff;outline-offset:3px}</style><link rel="stylesheet" href="../assets/navigation.css">
-</head><body>
+<style>
+.wrap{padding-bottom:90px}body[data-screen="quiz"] .panel{overflow:visible}body[data-screen="quiz"] .nav{position:sticky;bottom:74px;z-index:5;padding:12px;background:#132440f5;border:1px solid #ffffff40;border-radius:18px;box-shadow:0 8px 28px #0005}body[data-screen="quiz"] #next{min-width:160px}h1:focus,h2:focus{outline:none}@media(max-width:650px){body[data-screen="quiz"] .nav{bottom:calc(70px + env(safe-area-inset-bottom));gap:8px}body[data-screen="quiz"] #next{width:100%}.choices{grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr))}}
+</style><style>.profile-details{max-width:780px}.profile-details h2{font-size:clamp(1.2rem,3vw,1.6rem);margin-top:30px}.profile-details ul{padding-left:24px;color:#d8e3fa;line-height:1.7}.profile-details li+li{margin-top:8px}.career-try{margin-top:24px;padding:4px 20px 10px;background:#67e8f910;border:1px solid #67e8f950;border-radius:18px}.career-try h2{margin-top:16px}.career-sources{margin-top:24px;padding:16px;border:1px solid #ffffff35;border-radius:14px}.career-sources summary{cursor:pointer;font-weight:700;line-height:1.5}.career-sources a{overflow-wrap:anywhere}.career-sources summary:focus-visible{outline:3px solid #fbbf24;outline-offset:4px}</style></head><body>
 <a class="invernot-home" href="../index.html" aria-label="Volver al índice de la Familia Invernot">← Volver al inicio</a>
-<div class="wrap"><header><div class="brand">🧭 ¿Qué Pasará?</div><div class="row"><span class="pill" id="status">Tu aventura comienza</span><button class="secondary" id="reset">Reiniciar</button></div></header><main id="app" aria-live="polite"></main><div class="footer">Un proyecto educativo creado por Alexia · Los resultados son orientativos, no predicciones del futuro · Sin cuentas ni envío de respuestas a servidores</div></div><script>
+<div class="wrap"><header><div class="brand">🧭 ¿Qué Pasará?</div><div class="row"><span class="pill" id="status">Tu aventura comienza</span><button class="secondary" id="reset">Reiniciar</button></div></header><main id="app" aria-live="polite"></main><div class="footer">Un proyecto educativo de la Familia Invernot · Los resultados son orientativos, no predicciones del futuro · Sin cuentas ni envío de respuestas a servidores</div></div><script src="professions.js"></script><script>
 'use strict';
 const worlds=[{id:'ciencia',name:'Los descubridores',icon:'🔬',desc:'Ciencia, medicina, animales y naturaleza'},{id:'arte',name:'Los creadores',icon:'🎨',desc:'Arte, música, imaginación y diseño'},{id:'tecnologia',name:'Los inventores',icon:'🤖',desc:'Tecnología, máquinas y programación'},{id:'personas',name:'Los que ayudan',icon:'❤️',desc:'Enseñar, cuidar y escuchar'},{id:'aventura',name:'Los aventureros',icon:'🌍',desc:'Deporte, viajes y aire libre'},{id:'organizacion',name:'Los organizadores',icon:'🚀',desc:'Liderazgo, proyectos y negocios'}];
 const interests=['ciencia','salud','animales','naturaleza','arte','musica','diseno','comunicacion','tecnologia','ingenieria','matematicas','personas','ensenanza','deporte','viajes','liderazgo','negocios','organizacion'];
@@ -22,20 +24,1920 @@ organizacion:[['¿Qué proyecto dirigirías?','Una feria de ciencias','Un festiv
 };
 const optionTags={ciencia:[['salud','ciencia'],['animales','ciencia'],['ciencia','matematicas'],['naturaleza','ciencia']],arte:[['arte','diseno'],['musica','arte'],['diseno','ingenieria'],['comunicacion','arte']],tecnologia:[['tecnologia','matematicas'],['ingenieria','tecnologia'],['ingenieria','matematicas'],['tecnologia','diseno']],personas:[['salud','personas'],['ensenanza','personas'],['personas','comunicacion'],['liderazgo','personas']],aventura:[['naturaleza','ciencia'],['deporte','salud'],['viajes','comunicacion'],['animales','naturaleza']],organizacion:[['ciencia','organizacion'],['arte','negocios'],['negocios','organizacion'],['liderazgo','personas']]};
 const jobs=[
-['Ingeniería aeroespacial','Diseña y estudia aeronaves, satélites y sistemas espaciales.','Bachillerato de ciencias y tecnología → grado universitario de ingeniería aeroespacial.','tecnologia,ingenieria,matematicas,ciencia'],['Medicina','Previene, diagnostica y trata problemas de salud.','Bachillerato de ciencias y tecnología → grado en Medicina → formación especializada cuando corresponda.','salud,ciencia,personas'],['Veterinaria','Cuida la salud de animales y trabaja también en salud pública.','Bachillerato de ciencias y tecnología → grado en Veterinaria.','animales,salud,ciencia'],['Arquitectura','Diseña edificios y espacios seguros y útiles.','Bachillerato de ciencias y tecnología u otra vía de acceso → estudios universitarios de Arquitectura; revisar habilitación profesional.','diseno,arte,ingenieria,matematicas'],['Desarrollo de software','Crea aplicaciones, páginas web y servicios digitales.','ESO → Bachillerato o FP de informática → grado universitario o ciclos superiores, según la ocupación.','tecnologia,matematicas,diseno'],['Diseño de videojuegos','Diseña experiencias, personajes y mecánicas de juego.','ESO → Bachillerato o FP relacionada → estudios de videojuegos, programación, arte o diseño.','tecnologia,arte,diseno'],['Educación primaria','Enseña y acompaña a niños durante su aprendizaje.','Bachillerato o vía equivalente → grado en Educación Primaria; requisitos de acceso vigentes.','ensenanza,personas,comunicacion'],['Psicología','Estudia el comportamiento y ayuda a comprender emociones y conductas.','Bachillerato o vía equivalente → grado en Psicología; algunas salidas requieren estudios adicionales.','personas,salud,ciencia'],['Biología','Investiga seres vivos, ecosistemas y procesos biológicos.','Bachillerato de ciencias y tecnología → grado en Biología.','ciencia,animales,naturaleza'],['Ingeniería robótica','Diseña sistemas automatizados, sensores y robots.','Bachillerato de ciencias y tecnología o FP tecnológica → ingeniería relacionada.','ingenieria,tecnologia,matematicas'],['Diseño gráfico','Comunica ideas mediante imágenes, tipografía y medios digitales.','ESO → Bachillerato de artes o FP de diseño → estudios superiores relacionados.','arte,diseno,comunicacion'],['Música','Interpreta, compone o produce música.','Enseñanzas musicales, conservatorio, estudios superiores o formación especializada según la profesión.','musica,arte,comunicacion'],['Periodismo','Investiga, verifica y comunica noticias e historias.','Bachillerato o vía equivalente → grado en Periodismo o Comunicación.','comunicacion,personas,arte'],['Enfermería','Cuida pacientes y promueve la salud.','Bachillerato de ciencias y tecnología o vía equivalente → grado en Enfermería.','salud,personas,ciencia'],['Fisioterapia','Ayuda a prevenir y tratar problemas del movimiento.','Bachillerato o vía equivalente → grado en Fisioterapia.','salud,deporte,personas'],['Ciencias del deporte','Trabaja en entrenamiento, actividad física y promoción del deporte.','Bachillerato o vía equivalente → grado en Ciencias de la Actividad Física y del Deporte, u otras formaciones deportivas.','deporte,salud,personas'],['Guía de turismo','Acompaña y explica lugares, cultura y patrimonio.','ESO → Bachillerato o FP de turismo; consultar requisitos de habilitación según actividad.','viajes,comunicacion,personas'],['Conservación ambiental','Protege ecosistemas y ayuda a gestionar recursos naturales.','ESO → Bachillerato de ciencias o FP ambiental → estudios de ciencias ambientales o afines.','naturaleza,ciencia,animales'],['Dirección de empresas','Organiza personas, presupuestos y proyectos.','ESO → Bachillerato o FP de administración → grado en ADE u otras vías.','negocios,liderazgo,organizacion'],['Organización de eventos','Planifica actividades, presupuestos, equipos y experiencias.','ESO → FP de turismo, marketing o administración, o estudios universitarios relacionados.','organizacion,liderazgo,comunicacion'],['Ingeniería civil','Proyecta infraestructuras como puentes y carreteras.','Bachillerato de ciencias y tecnología → grado de ingeniería civil relacionado.','ingenieria,matematicas,organizacion'],['Investigación química','Estudia sustancias y desarrolla materiales y procesos.','Bachillerato de ciencias y tecnología → grado en Química o afín.','ciencia,matematicas,ingenieria'],['Trabajo social','Acompaña a personas y comunidades para mejorar su bienestar.','Bachillerato o vía equivalente → grado en Trabajo Social.','personas,comunicacion,organizacion'],['Marketing','Investiga necesidades y comunica productos o servicios.','ESO → FP de marketing o Bachillerato → estudios superiores relacionados.','negocios,arte,comunicacion'],['Biología marina','Estudia organismos y ecosistemas del mar.','Bachillerato de ciencias y tecnología → grado en Biología o Ciencias del Mar y posible especialización.','animales,naturaleza,ciencia']
-].map((j,i)=>({id:i,name:j[0],desc:j[1],path:j[2],tags:j[3].split(',')}));
-const moreJobs=[["Odontología", "Explora cómo trabajan los profesionales de odontología y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Farmacia", "Explora cómo trabajan los profesionales de farmacia y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Cirugía", "Explora cómo trabajan los profesionales de cirugía y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Pediatría", "Explora cómo trabajan los profesionales de pediatría y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Neurología", "Explora cómo trabajan los profesionales de neurología y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Psiquiatría", "Explora cómo trabajan los profesionales de psiquiatría y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Radiología", "Explora cómo trabajan los profesionales de radiología y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Terapia ocupacional", "Explora cómo trabajan los profesionales de terapia ocupacional y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Logopedia", "Explora cómo trabajan los profesionales de logopedia y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Óptica y optometría", "Explora cómo trabajan los profesionales de óptica y optometría y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Nutrición humana y dietética", "Explora cómo trabajan los profesionales de nutrición humana y dietética y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Técnico de emergencias sanitarias", "Explora cómo trabajan los profesionales de técnico de emergencias sanitarias y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Técnico de laboratorio clínico", "Explora cómo trabajan los profesionales de técnico de laboratorio clínico y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Higiene bucodental", "Explora cómo trabajan los profesionales de higiene bucodental y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Auxiliar de enfermería", "Explora cómo trabajan los profesionales de auxiliar de enfermería y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Podología", "Explora cómo trabajan los profesionales de podología y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Matrona", "Explora cómo trabajan los profesionales de matrona y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Técnico de farmacia", "Explora cómo trabajan los profesionales de técnico de farmacia y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Prótesis dentales", "Explora cómo trabajan los profesionales de prótesis dentales y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Investigación biomédica", "Explora cómo trabajan los profesionales de investigación biomédica y qué problemas resuelven en su día a día.", "Bachillerato o FP de Sanidad → estudios especializados según el puesto. Algunas profesiones exigen grado universitario y habilitación.", "salud,personas,ciencia", "Salud y bienestar"], ["Ciberseguridad", "Explora cómo trabajan los profesionales de ciberseguridad y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Inteligencia artificial", "Explora cómo trabajan los profesionales de inteligencia artificial y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Ciencia de datos", "Explora cómo trabajan los profesionales de ciencia de datos y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Administración de sistemas", "Explora cómo trabajan los profesionales de administración de sistemas y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Desarrollo web", "Explora cómo trabajan los profesionales de desarrollo web y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Desarrollo de aplicaciones móviles", "Explora cómo trabajan los profesionales de desarrollo de aplicaciones móviles y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Ingeniería de telecomunicaciones", "Explora cómo trabajan los profesionales de ingeniería de telecomunicaciones y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Diseño UX/UI", "Explora cómo trabajan los profesionales de diseño ux/ui y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Administración de bases de datos", "Explora cómo trabajan los profesionales de administración de bases de datos y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Ingeniería de redes", "Explora cómo trabajan los profesionales de ingeniería de redes y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Computación en la nube", "Explora cómo trabajan los profesionales de computación en la nube y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Desarrollo de videojuegos", "Explora cómo trabajan los profesionales de desarrollo de videojuegos y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Testing de software", "Explora cómo trabajan los profesionales de testing de software y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Ingeniería de datos", "Explora cómo trabajan los profesionales de ingeniería de datos y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Técnico de soporte informático", "Explora cómo trabajan los profesionales de técnico de soporte informático y qué problemas resuelven en su día a día.", "ESO → FP de Informática o Bachillerato → especialización técnica, FP superior o estudios universitarios, según el puesto.", "tecnologia,matematicas,ingenieria", "Tecnología e informática"], ["Ingeniería mecánica", "Explora cómo trabajan los profesionales de ingeniería mecánica y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería eléctrica", "Explora cómo trabajan los profesionales de ingeniería eléctrica y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería industrial", "Explora cómo trabajan los profesionales de ingeniería industrial y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería química", "Explora cómo trabajan los profesionales de ingeniería química y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería ambiental", "Explora cómo trabajan los profesionales de ingeniería ambiental y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería de energías renovables", "Explora cómo trabajan los profesionales de ingeniería de energías renovables y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería de materiales", "Explora cómo trabajan los profesionales de ingeniería de materiales y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería naval", "Explora cómo trabajan los profesionales de ingeniería naval y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Ingeniería biomédica", "Explora cómo trabajan los profesionales de ingeniería biomédica y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Topografía", "Explora cómo trabajan los profesionales de topografía y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Urbanismo", "Explora cómo trabajan los profesionales de urbanismo y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Delineación", "Explora cómo trabajan los profesionales de delineación y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Técnico de mantenimiento industrial", "Explora cómo trabajan los profesionales de técnico de mantenimiento industrial y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Instalación eléctrica", "Explora cómo trabajan los profesionales de instalación eléctrica y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Fontanería", "Explora cómo trabajan los profesionales de fontanería y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Carpintería", "Explora cómo trabajan los profesionales de carpintería y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Albañilería", "Explora cómo trabajan los profesionales de albañilería y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Soldadura", "Explora cómo trabajan los profesionales de soldadura y qué problemas resuelven en su día a día.", "ESO → FP industrial o Bachillerato científico-tecnológico → ingeniería, arquitectura o especialización profesional según el puesto.", "ingenieria,matematicas,tecnologia", "Ingeniería y construcción"], ["Educación infantil", "Explora cómo trabajan los profesionales de educación infantil y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Educación secundaria", "Explora cómo trabajan los profesionales de educación secundaria y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Educación especial", "Explora cómo trabajan los profesionales de educación especial y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Pedagogía", "Explora cómo trabajan los profesionales de pedagogía y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Educación social", "Explora cómo trabajan los profesionales de educación social y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Orientación educativa", "Explora cómo trabajan los profesionales de orientación educativa y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Integración social", "Explora cómo trabajan los profesionales de integración social y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Interpretación de lengua de signos", "Explora cómo trabajan los profesionales de interpretación de lengua de signos y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Traducción e interpretación", "Explora cómo trabajan los profesionales de traducción e interpretación y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Biblioteconomía", "Explora cómo trabajan los profesionales de biblioteconomía y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Cooperación internacional", "Explora cómo trabajan los profesionales de cooperación internacional y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Mediación comunitaria", "Explora cómo trabajan los profesionales de mediación comunitaria y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Sociología", "Explora cómo trabajan los profesionales de sociología y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Antropología", "Explora cómo trabajan los profesionales de antropología y qué problemas resuelven en su día a día.", "Bachillerato o FP de Servicios Socioculturales → estudios especializados; para docencia reglada consulta requisitos de titulación y acceso.", "personas,ensenanza,comunicacion", "Educación y sociedad"], ["Ilustración", "Explora cómo trabajan los profesionales de ilustración y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Animación 3D", "Explora cómo trabajan los profesionales de animación 3d y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Fotografía", "Explora cómo trabajan los profesionales de fotografía y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Dirección de cine", "Explora cómo trabajan los profesionales de dirección de cine y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Guion de cine", "Explora cómo trabajan los profesionales de guion de cine y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Actuación", "Explora cómo trabajan los profesionales de actuación y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Danza", "Explora cómo trabajan los profesionales de danza y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Producción musical", "Explora cómo trabajan los profesionales de producción musical y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Diseño de moda", "Explora cómo trabajan los profesionales de diseño de moda y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Diseño de interiores", "Explora cómo trabajan los profesionales de diseño de interiores y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Diseño industrial", "Explora cómo trabajan los profesionales de diseño industrial y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Diseño de producto", "Explora cómo trabajan los profesionales de diseño de producto y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Publicidad", "Explora cómo trabajan los profesionales de publicidad y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Relaciones públicas", "Explora cómo trabajan los profesionales de relaciones públicas y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Locución", "Explora cómo trabajan los profesionales de locución y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Edición de vídeo", "Explora cómo trabajan los profesionales de edición de vídeo y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Escritura", "Explora cómo trabajan los profesionales de escritura y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Restauración de arte", "Explora cómo trabajan los profesionales de restauración de arte y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Diseño de sonido", "Explora cómo trabajan los profesionales de diseño de sonido y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Escenografía", "Explora cómo trabajan los profesionales de escenografía y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Cómic", "Explora cómo trabajan los profesionales de cómic y qué problemas resuelven en su día a día.", "ESO → Bachillerato de Artes, enseñanzas artísticas o FP creativa → estudios profesionales o superiores según la especialidad.", "arte,diseno,comunicacion", "Arte y comunicación"], ["Física", "Explora cómo trabajan los profesionales de física y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Matemáticas", "Explora cómo trabajan los profesionales de matemáticas y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Astronomía", "Explora cómo trabajan los profesionales de astronomía y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Geología", "Explora cómo trabajan los profesionales de geología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Meteorología", "Explora cómo trabajan los profesionales de meteorología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Oceanografía", "Explora cómo trabajan los profesionales de oceanografía y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Botánica", "Explora cómo trabajan los profesionales de botánica y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Zoología", "Explora cómo trabajan los profesionales de zoología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Genética", "Explora cómo trabajan los profesionales de genética y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Microbiología", "Explora cómo trabajan los profesionales de microbiología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Biotecnología", "Explora cómo trabajan los profesionales de biotecnología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Arqueología", "Explora cómo trabajan los profesionales de arqueología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Paleontología", "Explora cómo trabajan los profesionales de paleontología y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Ciencias ambientales", "Explora cómo trabajan los profesionales de ciencias ambientales y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Guardería forestal", "Explora cómo trabajan los profesionales de guardería forestal y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Gestión de fauna silvestre", "Explora cómo trabajan los profesionales de gestión de fauna silvestre y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Agronomía", "Explora cómo trabajan los profesionales de agronomía y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Investigación climática", "Explora cómo trabajan los profesionales de investigación climática y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Técnico de laboratorio químico", "Explora cómo trabajan los profesionales de técnico de laboratorio químico y qué problemas resuelven en su día a día.", "Bachillerato científico o FP relacionada → estudios de ciencias, medioambiente o especialización técnica.", "ciencia,naturaleza,animales", "Ciencia y naturaleza"], ["Entrenamiento personal", "Explora cómo trabajan los profesionales de entrenamiento personal y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Preparación física", "Explora cómo trabajan los profesionales de preparación física y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Arbitraje deportivo", "Explora cómo trabajan los profesionales de arbitraje deportivo y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Fisiología del ejercicio", "Explora cómo trabajan los profesionales de fisiología del ejercicio y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Socorrismo", "Explora cómo trabajan los profesionales de socorrismo y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Monitor de montaña", "Explora cómo trabajan los profesionales de monitor de montaña y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Guía de naturaleza", "Explora cómo trabajan los profesionales de guía de naturaleza y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Dirección deportiva", "Explora cómo trabajan los profesionales de dirección deportiva y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Entrenamiento de fútbol", "Explora cómo trabajan los profesionales de entrenamiento de fútbol y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Instructor de esquí", "Explora cómo trabajan los profesionales de instructor de esquí y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Turismo activo", "Explora cómo trabajan los profesionales de turismo activo y qué problemas resuelven en su día a día.", "ESO → FP de actividades físicas, enseñanzas deportivas o Bachillerato → estudios especializados y titulaciones exigidas para cada actividad.", "deporte,viajes,personas", "Deporte y aventura"], ["Contabilidad", "Explora cómo trabajan los profesionales de contabilidad y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Auditoría", "Explora cómo trabajan los profesionales de auditoría y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Economía", "Explora cómo trabajan los profesionales de economía y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Finanzas", "Explora cómo trabajan los profesionales de finanzas y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Gestión de recursos humanos", "Explora cómo trabajan los profesionales de gestión de recursos humanos y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Emprendimiento", "Explora cómo trabajan los profesionales de emprendimiento y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Comercio internacional", "Explora cómo trabajan los profesionales de comercio internacional y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Logística", "Explora cómo trabajan los profesionales de logística y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Gestión de proyectos", "Explora cómo trabajan los profesionales de gestión de proyectos y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Análisis de mercado", "Explora cómo trabajan los profesionales de análisis de mercado y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Ventas", "Explora cómo trabajan los profesionales de ventas y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Gestión de tiendas", "Explora cómo trabajan los profesionales de gestión de tiendas y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Asesoría fiscal", "Explora cómo trabajan los profesionales de asesoría fiscal y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Administración pública", "Explora cómo trabajan los profesionales de administración pública y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Gestión inmobiliaria", "Explora cómo trabajan los profesionales de gestión inmobiliaria y qué problemas resuelven en su día a día.", "ESO → FP de Administración, Comercio o Marketing, o Bachillerato → estudios superiores o experiencia profesional.", "negocios,organizacion,liderazgo", "Empresa y comercio"], ["Pilotaje de avión", "Explora cómo trabajan los profesionales de pilotaje de avión y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Control de tráfico aéreo", "Explora cómo trabajan los profesionales de control de tráfico aéreo y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Tripulación de cabina", "Explora cómo trabajan los profesionales de tripulación de cabina y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Conducción ferroviaria", "Explora cómo trabajan los profesionales de conducción ferroviaria y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Mecánica de automóviles", "Explora cómo trabajan los profesionales de mecánica de automóviles y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Mecánica aeronáutica", "Explora cómo trabajan los profesionales de mecánica aeronáutica y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Transporte marítimo", "Explora cómo trabajan los profesionales de transporte marítimo y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Navegación mercante", "Explora cómo trabajan los profesionales de navegación mercante y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Conducción profesional", "Explora cómo trabajan los profesionales de conducción profesional y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Bomberos", "Explora cómo trabajan los profesionales de bomberos y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Protección civil", "Explora cómo trabajan los profesionales de protección civil y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Policía", "Explora cómo trabajan los profesionales de policía y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Servicios de emergencias", "Explora cómo trabajan los profesionales de servicios de emergencias y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Hostelería", "Explora cómo trabajan los profesionales de hostelería y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Cocina profesional", "Explora cómo trabajan los profesionales de cocina profesional y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Pastelería", "Explora cómo trabajan los profesionales de pastelería y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Panadería", "Explora cómo trabajan los profesionales de panadería y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Recepción hotelera", "Explora cómo trabajan los profesionales de recepción hotelera y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Organización turística", "Explora cómo trabajan los profesionales de organización turística y qué problemas resuelven en su día a día.", "ESO → FP, certificados profesionales o formación específica; algunas ocupaciones requieren licencias, permisos y pruebas oficiales.", "viajes,organizacion,tecnologia", "Transporte y servicios"], ["Agricultura", "Explora cómo trabajan los profesionales de agricultura y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Ganadería", "Explora cómo trabajan los profesionales de ganadería y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Apicultura", "Explora cómo trabajan los profesionales de apicultura y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Pesca profesional", "Explora cómo trabajan los profesionales de pesca profesional y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Acuicultura", "Explora cómo trabajan los profesionales de acuicultura y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Jardinería", "Explora cómo trabajan los profesionales de jardinería y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Paisajismo", "Explora cómo trabajan los profesionales de paisajismo y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Viticultura", "Explora cómo trabajan los profesionales de viticultura y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Enología", "Explora cómo trabajan los profesionales de enología y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Industria alimentaria", "Explora cómo trabajan los profesionales de industria alimentaria y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Cerámica artesanal", "Explora cómo trabajan los profesionales de cerámica artesanal y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Ebanistería", "Explora cómo trabajan los profesionales de ebanistería y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Floristería", "Explora cómo trabajan los profesionales de floristería y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Peluquería", "Explora cómo trabajan los profesionales de peluquería y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Estética y belleza", "Explora cómo trabajan los profesionales de estética y belleza y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"], ["Tatuaje artístico", "Explora cómo trabajan los profesionales de tatuaje artístico y qué problemas resuelven en su día a día.", "ESO → FP agraria, marítima, alimentaria o formación profesional específica; también existen itinerarios universitarios.", "naturaleza,ingenieria,organizacion", "Campo, mar y oficios"]];
-moreJobs.forEach(j=>jobs.push({id:jobs.length,name:j[0],desc:j[1],path:j[2],tags:j[3].split(','),category:j[4]}));
-
-const professionDescriptions={"Ingeniería aeroespacial": "Diseña y prueba aviones, satélites y cohetes; estudia cómo vuelan y cómo hacerlos más seguros.", "Medicina": "Escucha síntomas, examina pacientes, pide pruebas y elige tratamientos para mejorar su salud.", "Veterinaria": "Examina animales, pone vacunas, diagnostica enfermedades y a veces realiza operaciones.", "Arquitectura": "Imagina edificios, dibuja planos y coordina soluciones para que sean seguros, cómodos y útiles.", "Desarrollo de software": "Programa aplicaciones, encuentra errores y trabaja con equipos para resolver necesidades reales.", "Diseño de videojuegos": "Inventa reglas, personajes, niveles y experiencias que hacen divertidos los videojuegos.", "Educación primaria": "Prepara clases, enseña a leer y razonar, y ayuda a cada alumno a aprender a su ritmo.", "Psicología": "Escucha y estudia cómo pensamos, sentimos y actuamos; ayuda a afrontar dificultades.", "Biología": "Investiga seres vivos, desde células diminutas hasta ecosistemas completos.", "Ingeniería robótica": "Construye y programa robots que perciben el entorno y realizan tareas.", "Diseño gráfico": "Combina imágenes, letras y colores para comunicar ideas en carteles, marcas o pantallas.", "Música": "Compone, interpreta o enseña música; ensaya para mejorar y expresar emociones.", "Periodismo": "Investiga hechos, entrevista personas, comprueba datos y explica noticias con claridad.", "Enfermería": "Cuida pacientes, administra tratamientos indicados y observa cambios en su salud.", "Fisioterapia": "Ayuda a recuperar movimiento y reducir molestias mediante ejercicios y tratamientos físicos.", "Ciencias del deporte": "Estudia el movimiento y prepara actividades físicas seguras para mejorar salud y rendimiento.", "Guía de turismo": "Acompaña visitantes, explica historias y curiosidades y organiza recorridos culturales.", "Conservación ambiental": "Protege especies y hábitats, estudia amenazas y propone soluciones para la naturaleza.", "Dirección de empresas": "Organiza equipos, presupuestos y decisiones para que una empresa funcione bien.", "Organización de eventos": "Prepara celebraciones o congresos, coordina proveedores y resuelve imprevistos.", "Ingeniería civil": "Diseña puentes, carreteras y otras obras que deben resistir y ser seguras.", "Investigación química": "Experimenta con sustancias para descubrir materiales, reacciones y soluciones útiles.", "Trabajo social": "Acompaña a personas y familias que necesitan apoyo para acceder a recursos y derechos.", "Marketing": "Investiga qué necesitan los clientes y crea campañas para dar a conocer productos o ideas.", "Biología marina": "Estudia la vida del mar y cómo proteger peces, corales y otros organismos.", "Odontología": "Revisa dientes y encías, previene enfermedades y realiza tratamientos bucodentales.", "Farmacia": "Estudia medicamentos, explica cómo utilizarlos con seguridad y revisa posibles problemas.", "Cirugía": "Realiza operaciones con un equipo sanitario para tratar lesiones o enfermedades.", "Pediatría": "Atiende a bebés, niños y adolescentes, revisa su desarrollo y trata enfermedades.", "Neurología": "Estudia el cerebro y los nervios para diagnosticar problemas del sistema nervioso.", "Psiquiatría": "Es médico especialista en salud mental y puede diagnosticar y tratar enfermedades con medicamentos y otras terapias.", "Radiología": "Interpreta radiografías, resonancias y otras imágenes para ayudar a descubrir enfermedades.", "Terapia ocupacional": "Ayuda a personas a realizar actividades cotidianas cuando una lesión o discapacidad lo dificulta.", "Logopedia": "Trabaja con personas que tienen dificultades para hablar, comunicarse o tragar.", "Óptica y optometría": "Examina la visión, adapta gafas y lentes y detecta problemas que requieren revisión médica.", "Nutrición humana y dietética": "Estudia alimentación y salud y prepara recomendaciones nutricionales adaptadas a cada persona.", "Técnico de emergencias sanitarias": "Atiende urgencias y traslada pacientes de forma segura en ambulancias.", "Técnico de laboratorio clínico": "Analiza muestras de sangre y otros tejidos para aportar datos a diagnósticos médicos.", "Higiene bucodental": "Limpia y cuida dientes, enseña hábitos de higiene y ayuda a prevenir enfermedades bucales.", "Auxiliar de enfermería": "Ayuda al personal de enfermería con higiene, comodidad y cuidados básicos de pacientes.", "Podología": "Examina pies y trata problemas de uñas, piel y forma de caminar.", "Matrona": "Acompaña embarazos y partos y cuida a la madre y al bebé dentro de su profesión sanitaria.", "Técnico de farmacia": "Prepara y organiza productos farmacéuticos bajo supervisión y atiende a usuarios.", "Prótesis dentales": "Fabrica y ajusta piezas dentales, como coronas o prótesis, siguiendo indicaciones clínicas.", "Investigación biomédica": "Investiga células, enfermedades y tratamientos nuevos en laboratorios biomédicos.", "Ciberseguridad": "Protege ordenadores y redes, busca fallos de seguridad y responde a ataques digitales.", "Inteligencia artificial": "Diseña sistemas que aprenden patrones de datos para reconocer imágenes o ayudar a tomar decisiones.", "Ciencia de datos": "Analiza grandes conjuntos de datos y crea modelos para encontrar patrones útiles.", "Administración de sistemas": "Instala servidores, gestiona usuarios y mantiene sistemas informáticos funcionando.", "Desarrollo web": "Crea páginas y aplicaciones que usamos desde el navegador, cuidando su funcionamiento.", "Desarrollo de aplicaciones móviles": "Programa aplicaciones para móviles y prueba que funcionen en distintos dispositivos.", "Ingeniería de telecomunicaciones": "Diseña redes de comunicación, antenas y sistemas que transmiten información.", "Diseño UX/UI": "Investiga cómo usan las personas una aplicación y diseña pantallas fáciles de entender.", "Administración de bases de datos": "Organiza información en bases de datos y evita pérdidas o accesos indebidos.", "Ingeniería de redes": "Conecta dispositivos, configura redes y soluciona fallos de comunicación.", "Computación en la nube": "Prepara servicios informáticos en servidores remotos para que las aplicaciones puedan crecer.", "Desarrollo de videojuegos": "Programa el comportamiento de personajes, controles y sistemas internos de un videojuego.", "Testing de software": "Prueba programas, detecta errores y comprueba que cumplen lo esperado.", "Ingeniería de datos": "Construye sistemas para recoger, transformar y ordenar datos de muchas fuentes.", "Técnico de soporte informático": "Ayuda a personas cuando fallan sus ordenadores, programas o impresoras.", "Ingeniería mecánica": "Diseña máquinas y mecanismos y calcula cómo se moverán y resistirán.", "Ingeniería eléctrica": "Trabaja con circuitos, motores y sistemas que usan electricidad.", "Ingeniería industrial": "Mejora procesos de fábricas y organizaciones para producir con seguridad y eficiencia.", "Ingeniería química": "Diseña procesos industriales donde se transforman sustancias y materiales.", "Ingeniería ambiental": "Busca soluciones técnicas para reducir contaminación y cuidar agua, aire y suelo.", "Ingeniería de energías renovables": "Diseña instalaciones que aprovechan el sol, el viento y otras fuentes renovables.", "Ingeniería de materiales": "Investiga metales, plásticos y otros materiales para hacerlos más resistentes o ligeros.", "Ingeniería naval": "Diseña barcos y estructuras marinas y comprueba cómo se comportan en el agua.", "Ingeniería biomédica": "Crea tecnología médica, como sensores, prótesis y aparatos de diagnóstico.", "Topografía": "Mide terrenos y prepara mapas precisos para obras y planificación.", "Urbanismo": "Estudia cómo organizar barrios, parques, calles y servicios de una ciudad.", "Delineación": "Convierte ideas y medidas en planos técnicos detallados para construir o fabricar.", "Técnico de mantenimiento industrial": "Revisa máquinas de fábricas, detecta averías y cambia piezas para evitar paradas.", "Instalación eléctrica": "Instala y revisa cables, cuadros eléctricos y equipos siguiendo normas de seguridad.", "Fontanería": "Instala y repara tuberías, grifos y sistemas de agua y saneamiento.", "Carpintería": "Mide, corta y ensambla madera para construir muebles o estructuras.", "Albañilería": "Levanta muros y construye partes de edificios siguiendo planos y medidas.", "Soldadura": "Une piezas metálicas con técnicas especiales y comprueba que las uniones sean seguras.", "Educación infantil": "Acompaña a niños pequeños con juegos, rutinas y actividades que favorecen su desarrollo.", "Educación secundaria": "Enseña materias a adolescentes, prepara actividades y evalúa lo aprendido.", "Educación especial": "Adapta actividades y apoyos para alumnado con necesidades educativas diferentes.", "Pedagogía": "Estudia cómo aprendemos y diseña maneras de mejorar la educación.", "Educación social": "Acompaña a personas en situaciones difíciles mediante proyectos educativos y sociales.", "Orientación educativa": "Ayuda a estudiantes a conocerse, superar dificultades y elegir estudios.", "Integración social": "Apoya a personas para participar en la escuela, el trabajo y la comunidad.", "Interpretación de lengua de signos": "Facilita la comunicación entre personas sordas y oyentes mediante lengua de signos.", "Traducción e interpretación": "Traduce textos o interpreta conversaciones entre personas que hablan lenguas diferentes.", "Biblioteconomía": "Organiza libros y recursos de información y ayuda a encontrar lo que se busca.", "Cooperación internacional": "Colabora en proyectos con comunidades y organizaciones de distintos países.", "Mediación comunitaria": "Ayuda a personas o grupos a dialogar y buscar acuerdos ante conflictos.", "Sociología": "Investiga cómo se organizan los grupos humanos y cómo cambia la sociedad.", "Antropología": "Estudia culturas y formas de vida para comprender la diversidad humana.", "Ilustración": "Crea dibujos para libros, carteles, juegos y otras historias visuales.", "Animación 3D": "Da movimiento a personajes y objetos digitales para películas o videojuegos.", "Fotografía": "Utiliza cámaras, luz y composición para contar historias con fotografías.", "Dirección de cine": "Coordina la creación de una película y decide cómo contar la historia en imágenes.", "Guion de cine": "Escribe escenas, diálogos y estructuras para películas y series.", "Actuación": "Interpreta personajes y expresa emociones en teatro, cine o televisión.", "Danza": "Entrena movimientos y coreografías para actuar y comunicar con el cuerpo.", "Producción musical": "Graba, mezcla y organiza canciones para que suenen como se desea.", "Diseño de moda": "Diseña prendas, elige materiales y prepara colecciones de ropa.", "Diseño de interiores": "Planifica espacios interiores para que sean cómodos, bonitos y funcionales.", "Diseño industrial": "Diseña objetos fabricados en serie, como lámparas, herramientas o electrodomésticos.", "Diseño de producto": "Investiga necesidades y crea productos que las resuelvan de forma útil.", "Publicidad": "Crea anuncios y mensajes para dar a conocer productos, servicios o causas.", "Relaciones públicas": "Cuida la comunicación de una organización con su público y los medios.", "Locución": "Usa su voz para narrar programas, anuncios, audiolibros o personajes.", "Edición de vídeo": "Selecciona y une escenas, sonidos y efectos para construir un vídeo.", "Escritura": "Inventa historias, redacta textos y revisa versiones hasta que funcionan bien.", "Restauración de arte": "Estudia y conserva obras antiguas utilizando técnicas que no las dañen.", "Diseño de sonido": "Crea sonidos y ambientes para películas, videojuegos y espectáculos.", "Escenografía": "Diseña decorados y espacios donde transcurren obras de teatro o rodajes.", "Cómic": "Cuenta historias mediante viñetas, dibujos, diálogos y composición de páginas.", "Física": "Investiga energía, movimiento, luz y leyes que explican el universo.", "Matemáticas": "Estudia números, formas y patrones y resuelve problemas con razonamiento.", "Astronomía": "Observa estrellas, planetas y galaxias para comprender el universo.", "Geología": "Estudia rocas, volcanes y la historia de la Tierra.", "Meteorología": "Analiza la atmósfera para comprender y pronosticar el tiempo.", "Oceanografía": "Investiga océanos, corrientes, fondos marinos y su relación con el clima.", "Botánica": "Estudia plantas, cómo crecen y cómo se relacionan con su entorno.", "Zoología": "Investiga animales, su comportamiento, su evolución y sus hábitats.", "Genética": "Estudia genes y cómo se transmite la información hereditaria.", "Microbiología": "Investiga microorganismos como bacterias, hongos y virus.", "Biotecnología": "Utiliza organismos y células para desarrollar alimentos, materiales o tratamientos.", "Arqueología": "Excava y estudia objetos antiguos para conocer cómo vivían otras sociedades.", "Paleontología": "Estudia fósiles para reconstruir la vida de hace millones de años.", "Ciencias ambientales": "Analiza ecosistemas y problemas ambientales para proponer soluciones.", "Guardería forestal": "Vigila espacios naturales, informa a visitantes y detecta daños o riesgos.", "Gestión de fauna silvestre": "Estudia poblaciones de animales salvajes y ayuda a protegerlas.", "Agronomía": "Investiga cultivos y suelos para mejorar la producción agrícola de forma responsable.", "Investigación climática": "Estudia cómo cambia el clima y analiza datos para entender sus efectos.", "Técnico de laboratorio químico": "Realiza experimentos químicos, prepara muestras y registra resultados con seguridad.", "Entrenamiento personal": "Diseña ejercicios adaptados a objetivos y enseña a entrenar correctamente.", "Preparación física": "Prepara deportistas para competir mediante sesiones físicas planificadas.", "Arbitraje deportivo": "Aplica reglas deportivas durante partidos y toma decisiones imparciales.", "Fisiología del ejercicio": "Estudia cómo responde el cuerpo al esfuerzo y la recuperación.", "Socorrismo": "Vigila zonas de baño y actúa rápidamente ante emergencias acuáticas.", "Monitor de montaña": "Guía actividades de montaña, comprueba rutas y previene riesgos.", "Guía de naturaleza": "Acompaña grupos en espacios naturales y explica el entorno.", "Dirección deportiva": "Organiza instalaciones, actividades y equipos de entidades deportivas.", "Entrenamiento de fútbol": "Planifica entrenamientos, enseña táctica y acompaña a un equipo de fútbol.", "Instructor de esquí": "Enseña a esquiar y ayuda a progresar con seguridad en la nieve.", "Turismo activo": "Organiza experiencias como senderismo o kayak y prepara medidas de seguridad.", "Contabilidad": "Registra ingresos y gastos para saber cómo funciona económicamente una organización.", "Auditoría": "Revisa cuentas y documentos para comprobar que reflejan correctamente la realidad.", "Economía": "Estudia cómo se producen, distribuyen y consumen recursos.", "Finanzas": "Planifica inversiones, presupuestos y necesidades de dinero valorando riesgos.", "Gestión de recursos humanos": "Organiza selección, formación y bienestar de personas en una empresa.", "Emprendimiento": "Crea un proyecto o negocio, busca clientes y resuelve problemas del día a día.", "Comercio internacional": "Organiza compras y ventas entre países y gestiona documentos comerciales.", "Logística": "Coordina almacenes, inventarios y transportes para que lleguen productos a tiempo.", "Gestión de proyectos": "Planifica tareas, plazos y recursos para que un proyecto llegue a buen puerto.", "Análisis de mercado": "Investiga lo que necesitan los consumidores y cómo cambia un mercado.", "Ventas": "Explica productos a clientes y busca soluciones a sus necesidades.", "Gestión de tiendas": "Organiza un comercio, sus existencias, trabajadores y atención al público.", "Asesoría fiscal": "Ayuda a entender impuestos y preparar declaraciones según las normas.", "Administración pública": "Gestiona servicios y trámites para que funcionen las instituciones públicas.", "Gestión inmobiliaria": "Ayuda a comprar, vender o alquilar inmuebles y revisa documentación.", "Pilotaje de avión": "Pilota aeronaves, prepara rutas y revisa procedimientos de seguridad.", "Control de tráfico aéreo": "Organiza los movimientos de aviones para mantener distancias seguras.", "Tripulación de cabina": "Atiende a pasajeros de aviones y aplica procedimientos de seguridad a bordo.", "Conducción ferroviaria": "Conduce trenes, respeta señales y comprueba las condiciones del trayecto.", "Mecánica de automóviles": "Revisa motores, frenos y sistemas de coches para detectar y reparar averías.", "Mecánica aeronáutica": "Mantiene y repara sistemas de aeronaves siguiendo controles estrictos.", "Transporte marítimo": "Organiza o realiza el traslado de personas y mercancías por mar.", "Navegación mercante": "Navega barcos comerciales y ayuda a planificar rutas y maniobras seguras.", "Conducción profesional": "Conduce camiones o autobuses, revisa el vehículo y cumple normas de circulación.", "Bomberos": "Apaga incendios, realiza rescates y participa en prevención de emergencias.", "Protección civil": "Prepara planes para reducir riesgos y coordina ayuda ante desastres.", "Policía": "Protege a la ciudadanía, atiende avisos e investiga hechos según sus funciones.", "Servicios de emergencias": "Coordina respuestas ante accidentes y situaciones de peligro.", "Hostelería": "Atiende huéspedes o comensales y organiza servicios en alojamientos o restaurantes.", "Cocina profesional": "Prepara platos, organiza ingredientes y cuida la higiene de la cocina.", "Pastelería": "Elabora tartas, postres y dulces cuidando recetas y presentación.", "Panadería": "Prepara masas y hornea panes, controlando tiempos y temperaturas.", "Recepción hotelera": "Recibe huéspedes, gestiona reservas y ayuda a resolver incidencias.", "Organización turística": "Diseña y coordina viajes, actividades y servicios para visitantes.", "Agricultura": "Cultiva alimentos, cuida el suelo y utiliza herramientas agrícolas.", "Ganadería": "Cuida animales de granja y controla su alimentación, bienestar y alojamiento.", "Apicultura": "Cuida colmenas y recoge productos de las abejas protegiendo su salud.", "Pesca profesional": "Captura productos del mar siguiendo normas de seguridad y sostenibilidad.", "Acuicultura": "Cría peces o mariscos en instalaciones controladas y vigila su bienestar.", "Jardinería": "Planta, poda y mantiene jardines, parques y zonas verdes.", "Paisajismo": "Diseña jardines y espacios exteriores teniendo en cuenta plantas y usos.", "Viticultura": "Cultiva uvas y cuida viñedos a lo largo de las estaciones.", "Enología": "Estudia y supervisa procesos de elaboración y calidad de vinos.", "Industria alimentaria": "Transforma materias primas en alimentos y comprueba higiene y calidad.", "Cerámica artesanal": "Modela barro, crea piezas y utiliza hornos y esmaltes.", "Ebanistería": "Construye y restaura muebles de madera con cortes y uniones precisas.", "Floristería": "Prepara ramos y decoraciones con flores según cada ocasión.", "Peluquería": "Corta, peina y colorea cabello teniendo en cuenta las preferencias del cliente.", "Estética y belleza": "Realiza cuidados estéticos de piel, uñas o maquillaje con higiene y atención.", "Tatuaje artístico": "Diseña y realiza tatuajes aplicando técnicas artísticas y estrictas medidas higiénicas."};
-const profileSkills={'Salud y bienestar':'observación, paciencia y responsabilidad','Tecnología e informática':'lógica, curiosidad y trabajo en equipo'};
+ {
+  "id": 0,
+  "name": "Ingeniería aeroespacial",
+  "tags": [
+   "tecnologia",
+   "ingenieria",
+   "matematicas",
+   "ciencia"
+  ]
+ },
+ {
+  "id": 1,
+  "name": "Medicina",
+  "tags": [
+   "salud",
+   "ciencia",
+   "personas"
+  ]
+ },
+ {
+  "id": 2,
+  "name": "Veterinaria",
+  "tags": [
+   "animales",
+   "salud",
+   "ciencia"
+  ]
+ },
+ {
+  "id": 3,
+  "name": "Arquitectura",
+  "tags": [
+   "diseno",
+   "arte",
+   "ingenieria",
+   "matematicas"
+  ]
+ },
+ {
+  "id": 4,
+  "name": "Desarrollo de software",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "diseno"
+  ]
+ },
+ {
+  "id": 5,
+  "name": "Diseño de videojuegos",
+  "tags": [
+   "tecnologia",
+   "arte",
+   "diseno"
+  ]
+ },
+ {
+  "id": 6,
+  "name": "Educación primaria",
+  "tags": [
+   "ensenanza",
+   "personas",
+   "comunicacion"
+  ]
+ },
+ {
+  "id": 7,
+  "name": "Psicología",
+  "tags": [
+   "personas",
+   "salud",
+   "ciencia"
+  ]
+ },
+ {
+  "id": 8,
+  "name": "Biología",
+  "tags": [
+   "ciencia",
+   "animales",
+   "naturaleza"
+  ]
+ },
+ {
+  "id": 9,
+  "name": "Ingeniería robótica",
+  "tags": [
+   "ingenieria",
+   "tecnologia",
+   "matematicas"
+  ]
+ },
+ {
+  "id": 10,
+  "name": "Diseño gráfico",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ]
+ },
+ {
+  "id": 11,
+  "name": "Música",
+  "tags": [
+   "musica",
+   "arte",
+   "comunicacion"
+  ]
+ },
+ {
+  "id": 12,
+  "name": "Periodismo",
+  "tags": [
+   "comunicacion",
+   "personas",
+   "arte"
+  ]
+ },
+ {
+  "id": 13,
+  "name": "Enfermería",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ]
+ },
+ {
+  "id": 14,
+  "name": "Fisioterapia",
+  "tags": [
+   "salud",
+   "deporte",
+   "personas"
+  ]
+ },
+ {
+  "id": 15,
+  "name": "Ciencias del deporte",
+  "tags": [
+   "deporte",
+   "salud",
+   "personas"
+  ]
+ },
+ {
+  "id": 16,
+  "name": "Guía de turismo",
+  "tags": [
+   "viajes",
+   "comunicacion",
+   "personas"
+  ]
+ },
+ {
+  "id": 17,
+  "name": "Conservación ambiental",
+  "tags": [
+   "naturaleza",
+   "ciencia",
+   "animales"
+  ]
+ },
+ {
+  "id": 18,
+  "name": "Dirección de empresas",
+  "tags": [
+   "negocios",
+   "liderazgo",
+   "organizacion"
+  ]
+ },
+ {
+  "id": 19,
+  "name": "Organización de eventos",
+  "tags": [
+   "organizacion",
+   "liderazgo",
+   "comunicacion"
+  ]
+ },
+ {
+  "id": 20,
+  "name": "Ingeniería civil",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "organizacion"
+  ]
+ },
+ {
+  "id": 21,
+  "name": "Investigación química",
+  "tags": [
+   "ciencia",
+   "matematicas",
+   "ingenieria"
+  ]
+ },
+ {
+  "id": 22,
+  "name": "Trabajo social",
+  "tags": [
+   "personas",
+   "comunicacion",
+   "organizacion"
+  ]
+ },
+ {
+  "id": 23,
+  "name": "Marketing",
+  "tags": [
+   "negocios",
+   "arte",
+   "comunicacion"
+  ]
+ },
+ {
+  "id": 24,
+  "name": "Biología marina",
+  "tags": [
+   "animales",
+   "naturaleza",
+   "ciencia"
+  ]
+ },
+ {
+  "id": 25,
+  "name": "Odontología",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 26,
+  "name": "Farmacia",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 27,
+  "name": "Cirugía",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 28,
+  "name": "Pediatría",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 29,
+  "name": "Neurología",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 30,
+  "name": "Psiquiatría",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 31,
+  "name": "Radiología",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 32,
+  "name": "Terapia ocupacional",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 33,
+  "name": "Logopedia",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 34,
+  "name": "Óptica y optometría",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 35,
+  "name": "Nutrición humana y dietética",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 36,
+  "name": "Técnico de emergencias sanitarias",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 37,
+  "name": "Técnico de laboratorio clínico",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 38,
+  "name": "Higiene bucodental",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 39,
+  "name": "Auxiliar de enfermería",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 40,
+  "name": "Podología",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 41,
+  "name": "Matrona",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 42,
+  "name": "Técnico de farmacia",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 43,
+  "name": "Prótesis dentales",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 44,
+  "name": "Investigación biomédica",
+  "tags": [
+   "salud",
+   "personas",
+   "ciencia"
+  ],
+  "category": "Salud y bienestar"
+ },
+ {
+  "id": 45,
+  "name": "Ciberseguridad",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 46,
+  "name": "Inteligencia artificial",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 47,
+  "name": "Ciencia de datos",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 48,
+  "name": "Administración de sistemas",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 49,
+  "name": "Desarrollo web",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 50,
+  "name": "Desarrollo de aplicaciones móviles",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 51,
+  "name": "Ingeniería de telecomunicaciones",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 52,
+  "name": "Diseño UX/UI",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 53,
+  "name": "Administración de bases de datos",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 54,
+  "name": "Ingeniería de redes",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 55,
+  "name": "Computación en la nube",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 56,
+  "name": "Desarrollo de videojuegos",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 57,
+  "name": "Testing de software",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 58,
+  "name": "Ingeniería de datos",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 59,
+  "name": "Técnico de soporte informático",
+  "tags": [
+   "tecnologia",
+   "matematicas",
+   "ingenieria"
+  ],
+  "category": "Tecnología e informática"
+ },
+ {
+  "id": 60,
+  "name": "Ingeniería mecánica",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 61,
+  "name": "Ingeniería eléctrica",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 62,
+  "name": "Ingeniería industrial",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 63,
+  "name": "Ingeniería química",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 64,
+  "name": "Ingeniería ambiental",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 65,
+  "name": "Ingeniería de energías renovables",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 66,
+  "name": "Ingeniería de materiales",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 67,
+  "name": "Ingeniería naval",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 68,
+  "name": "Ingeniería biomédica",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 69,
+  "name": "Topografía",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 70,
+  "name": "Urbanismo",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 71,
+  "name": "Delineación",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 72,
+  "name": "Técnico de mantenimiento industrial",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 73,
+  "name": "Instalación eléctrica",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 74,
+  "name": "Fontanería",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 75,
+  "name": "Carpintería",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 76,
+  "name": "Albañilería",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 77,
+  "name": "Soldadura",
+  "tags": [
+   "ingenieria",
+   "matematicas",
+   "tecnologia"
+  ],
+  "category": "Ingeniería y construcción"
+ },
+ {
+  "id": 78,
+  "name": "Educación infantil",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 79,
+  "name": "Educación secundaria",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 80,
+  "name": "Educación especial",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 81,
+  "name": "Pedagogía",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 82,
+  "name": "Educación social",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 83,
+  "name": "Orientación educativa",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 84,
+  "name": "Integración social",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 85,
+  "name": "Interpretación de lengua de signos",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 86,
+  "name": "Traducción e interpretación",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 87,
+  "name": "Biblioteconomía",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 88,
+  "name": "Cooperación internacional",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 89,
+  "name": "Mediación comunitaria",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 90,
+  "name": "Sociología",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 91,
+  "name": "Antropología",
+  "tags": [
+   "personas",
+   "ensenanza",
+   "comunicacion"
+  ],
+  "category": "Educación y sociedad"
+ },
+ {
+  "id": 92,
+  "name": "Ilustración",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 93,
+  "name": "Animación 3D",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 94,
+  "name": "Fotografía",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 95,
+  "name": "Dirección de cine",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 96,
+  "name": "Guion de cine",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 97,
+  "name": "Actuación",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 98,
+  "name": "Danza",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 99,
+  "name": "Producción musical",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 100,
+  "name": "Diseño de moda",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 101,
+  "name": "Diseño de interiores",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 102,
+  "name": "Diseño industrial",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 103,
+  "name": "Diseño de producto",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 104,
+  "name": "Publicidad",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 105,
+  "name": "Relaciones públicas",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 106,
+  "name": "Locución",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 107,
+  "name": "Edición de vídeo",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 108,
+  "name": "Escritura",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 109,
+  "name": "Restauración de arte",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 110,
+  "name": "Diseño de sonido",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 111,
+  "name": "Escenografía",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 112,
+  "name": "Cómic",
+  "tags": [
+   "arte",
+   "diseno",
+   "comunicacion"
+  ],
+  "category": "Arte y comunicación"
+ },
+ {
+  "id": 113,
+  "name": "Física",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 114,
+  "name": "Matemáticas",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 115,
+  "name": "Astronomía",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 116,
+  "name": "Geología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 117,
+  "name": "Meteorología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 118,
+  "name": "Oceanografía",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 119,
+  "name": "Botánica",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 120,
+  "name": "Zoología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 121,
+  "name": "Genética",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 122,
+  "name": "Microbiología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 123,
+  "name": "Biotecnología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 124,
+  "name": "Arqueología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 125,
+  "name": "Paleontología",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 126,
+  "name": "Ciencias ambientales",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 127,
+  "name": "Guardería forestal",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 128,
+  "name": "Gestión de fauna silvestre",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 129,
+  "name": "Agronomía",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 130,
+  "name": "Investigación climática",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 131,
+  "name": "Técnico de laboratorio químico",
+  "tags": [
+   "ciencia",
+   "naturaleza",
+   "animales"
+  ],
+  "category": "Ciencia y naturaleza"
+ },
+ {
+  "id": 132,
+  "name": "Entrenamiento personal",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 133,
+  "name": "Preparación física",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 134,
+  "name": "Arbitraje deportivo",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 135,
+  "name": "Fisiología del ejercicio",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 136,
+  "name": "Socorrismo",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 137,
+  "name": "Monitor de montaña",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 138,
+  "name": "Guía de naturaleza",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 139,
+  "name": "Dirección deportiva",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 140,
+  "name": "Entrenamiento de fútbol",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 141,
+  "name": "Instructor de esquí",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 142,
+  "name": "Turismo activo",
+  "tags": [
+   "deporte",
+   "viajes",
+   "personas"
+  ],
+  "category": "Deporte y aventura"
+ },
+ {
+  "id": 143,
+  "name": "Contabilidad",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 144,
+  "name": "Auditoría",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 145,
+  "name": "Economía",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 146,
+  "name": "Finanzas",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 147,
+  "name": "Gestión de recursos humanos",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 148,
+  "name": "Emprendimiento",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 149,
+  "name": "Comercio internacional",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 150,
+  "name": "Logística",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 151,
+  "name": "Gestión de proyectos",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 152,
+  "name": "Análisis de mercado",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 153,
+  "name": "Ventas",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 154,
+  "name": "Gestión de tiendas",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 155,
+  "name": "Asesoría fiscal",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 156,
+  "name": "Administración pública",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 157,
+  "name": "Gestión inmobiliaria",
+  "tags": [
+   "negocios",
+   "organizacion",
+   "liderazgo"
+  ],
+  "category": "Empresa y comercio"
+ },
+ {
+  "id": 158,
+  "name": "Pilotaje de avión",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 159,
+  "name": "Control de tráfico aéreo",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 160,
+  "name": "Tripulación de cabina",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 161,
+  "name": "Conducción ferroviaria",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 162,
+  "name": "Mecánica de automóviles",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 163,
+  "name": "Mecánica aeronáutica",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 164,
+  "name": "Transporte marítimo",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 165,
+  "name": "Navegación mercante",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 166,
+  "name": "Conducción profesional",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 167,
+  "name": "Bomberos",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 168,
+  "name": "Protección civil",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 169,
+  "name": "Policía",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 170,
+  "name": "Servicios de emergencias",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 171,
+  "name": "Hostelería",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 172,
+  "name": "Cocina profesional",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 173,
+  "name": "Pastelería",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 174,
+  "name": "Panadería",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 175,
+  "name": "Recepción hotelera",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 176,
+  "name": "Organización turística",
+  "tags": [
+   "viajes",
+   "organizacion",
+   "tecnologia"
+  ],
+  "category": "Transporte y servicios"
+ },
+ {
+  "id": 177,
+  "name": "Agricultura",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 178,
+  "name": "Ganadería",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 179,
+  "name": "Apicultura",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 180,
+  "name": "Pesca profesional",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 181,
+  "name": "Acuicultura",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 182,
+  "name": "Jardinería",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 183,
+  "name": "Paisajismo",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 184,
+  "name": "Viticultura",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 185,
+  "name": "Enología",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 186,
+  "name": "Industria alimentaria",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 187,
+  "name": "Cerámica artesanal",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 188,
+  "name": "Ebanistería",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 189,
+  "name": "Floristería",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 190,
+  "name": "Peluquería",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 191,
+  "name": "Estética y belleza",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ },
+ {
+  "id": 192,
+  "name": "Tatuaje artístico",
+  "tags": [
+   "naturaleza",
+   "ingenieria",
+   "organizacion"
+  ],
+  "category": "Campo, mar y oficios"
+ }
+];
+const profiles=window.professionProfiles;
+for(const job of jobs){const profile=profiles[job.name];if(!profile)throw new Error('Falta la ficha de '+job.name);job.desc=profile.summary;job.path=profile.study;}
+const professionDescriptions=Object.fromEntries(jobs.map(job=>[job.name,job.desc]));
 function fullProfile(job){
- const task=professionDescriptions[job.name]||job.desc;
- const cat=job.category||'Profesiones iniciales';
- const context= /salud|medicina/i.test(cat)?'centros sanitarios, laboratorios o servicios de atención':/arte|cultura|comunicaci/i.test(cat)?'estudios creativos, organizaciones culturales o proyectos propios':/tecnolog|ingenier/i.test(cat)?'empresas, talleres, laboratorios o equipos de desarrollo':/educaci|social/i.test(cat)?'centros educativos, entidades sociales o servicios comunitarios':/naturaleza|campo|mar/i.test(cat)?'espacios naturales, explotaciones, centros de investigación o empresas especializadas':/deporte|turismo/i.test(cat)?'clubes, centros de actividades, instalaciones o proyectos turísticos':'empresas, administraciones, organizaciones o proyectos propios';
- const parts=task.split(';');
- const daily=parts.length>1?parts[0].trim()+'. '+parts.slice(1).join(';').trim():task;
- return `<div class="profile-details"><h2>🌟 ¿En qué consiste este trabajo?</h2><p>${esc(task)}</p><h2>🧩 ¿Qué hace durante el día?</h2><p>${esc(daily)} No todos los días son iguales: unas jornadas se dedican a preparar el trabajo y otras a resolver problemas inesperados.</p><h2>🏡 ¿Dónde puede trabajar?</h2><p>Según su especialidad, puede trabajar en ${esc(context)}. Algunas personas trabajan por cuenta propia y otras forman parte de un equipo.</p><h2>💪 ¿Qué necesitas practicar?</h2><p>Ayuda mucho aprender a hacer preguntas, escuchar, trabajar con otras personas y seguir practicando aunque algo no salga a la primera. Las habilidades concretas cambian según la especialidad.</p><h2>🎒 ¿Qué puedo estudiar?</h2><p>${esc(job.path)}</p><p class="small muted">Esta ruta es orientativa: los requisitos exactos dependen del país, la especialidad y el tipo de trabajo. Algunas profesiones exigen un título oficial y otras permiten varias vías de formación.</p><h2>✨ Lo emocionante y lo difícil</h2><p><strong>Lo emocionante:</strong> poder usar lo aprendido para hacer tareas reales y mejorar con la experiencia.</p><p><strong>Lo difícil:</strong> requiere constancia, aprender cosas nuevas y aceptar que a veces hay errores o imprevistos.</p><div class="warning">🧭 Esta ficha te ayuda a explorar una profesión. No significa que tengas que elegirla ahora ni que sea la única adecuada para ti.</div></div>`;
+ const p=profiles[job.name];
+ return `<div class="profile-details"><h2>🌟 ¿En qué consiste este trabajo?</h2><p>${esc(p.summary)}</p><h2>🧩 Tareas que podrías realizar</h2><ul>${p.tasks.map(task=>`<li>${esc(task)}.</li>`).join('')}</ul><h2>🏡 ¿Dónde puede trabajar?</h2><p>${esc(p.where)}</p><h2>💪 Habilidades de esta profesión</h2><p>${esc(p.skills)}</p><h2>🎒 ¿Qué puedo estudiar?</h2><p>${esc(p.study)}</p><h2>✨ Lo gratificante y lo exigente</h2><p><strong>Lo gratificante:</strong> ${esc(p.reward)}</p><p><strong>El reto:</strong> ${esc(p.challenge)}</p><div class="career-try"><h2>🧭 Una forma de explorarlo</h2><p>${esc(p.tryIt)}</p></div><details class="career-sources"><summary>Consultar estudios y requisitos en fuentes oficiales</summary><p class="small">Orientación para España. Comprueba la oferta y los requisitos del puesto en tu comunidad antes de elegir un itinerario.</p><ul>${p.sources.map(source=>`<li><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a></li>`).join('')}</ul><p class="small muted">Contenido editorial revisado el 13 de noviembre de 2026. Las fichas describen ejemplos de tareas; las funciones concretas dependen del puesto.</p></details><div class="warning">Esta ficha te ayuda a explorar una posibilidad. No tienes que decidir tu futuro ahora.</div></div>`;
 }
 function catalog(){const categories=['Todas',...new Set(jobs.map(j=>j.category||'Profesiones iniciales'))];view(`<section class="panel"><div class="tag">Enciclopedia profesional</div><h1>Explora todas las profesiones 🌎</h1><p>Busca una profesión o descubre algo nuevo. ${jobs.length} profesiones en esta versión. Las rutas educativas son orientativas.</p><div class="row"><input id="searchJobs" type="search" placeholder="Buscar profesión..." aria-label="Buscar profesión" style="flex:2;min-width:180px"><select id="filterJobs" aria-label="Filtrar por familia">${categories.map(c=>`<option>${esc(c)}</option>`).join('')}</select></div><p id="jobCount" class="small"></p><div class="grid" id="catalogGrid"></div>${actions('<button class="secondary" id="catalogBack">← Volver al inicio</button>')}</section>`);document.getElementById('catalogBack').onclick=()=>{state.screen='welcome';render()};const draw=()=>{let q=document.getElementById('searchJobs').value.toLocaleLowerCase('es'),c=document.getElementById('filterJobs').value;let matches=jobs.filter(j=>(c==='Todas'||(j.category||'Profesiones iniciales')===c)&&j.name.toLocaleLowerCase('es').includes(q));document.getElementById('jobCount').textContent=matches.length+' profesiones encontradas';document.getElementById('catalogGrid').innerHTML=matches.map(j=>`<div class="tile"><h3>${esc(j.name)}</h3><p class="small">${esc(professionDescriptions[j.name]||j.desc)}</p><button data-catalog-job="${j.id}">Ver profesión →</button></div>`).join('')||'<p>No encontramos ninguna. Prueba con otra palabra.</p>';document.querySelectorAll('[data-catalog-job]').forEach(b=>b.onclick=()=>{state.job=+b.dataset.catalogJob;state.returnTo='catalog';state.screen='job';render()})};document.getElementById('searchJobs').oninput=draw;document.getElementById('filterJobs').onchange=draw;draw()}
 const worldColors={ciencia:'#267c83',arte:'#8b4b9a',tecnologia:'#3767a4',personas:'#ad5877',aventura:'#38835c',organizacion:'#97703c'};
@@ -50,10 +1952,11 @@ let cameraStream=null;
 function stopCamera(){if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}}
 function explorerAvatar(){return state.photo?`<span class="anime-frame anime-${state.animeStyle||'normal'}"><img class="photo-avatar" src="${state.manga||state.photo}" alt="Tu personaje explorador"></span>`:state.avatar}
 function setExplorerPhoto(source){const c=document.createElement('canvas');c.width=240;c.height=240;const ctx=c.getContext('2d');const w=source.videoWidth||source.width,h=source.videoHeight||source.height;const side=Math.min(w,h);ctx.drawImage(source,(w-side)/2,(h-side)/2,side,side,0,0,240,240);state.photo=c.toDataURL('image/jpeg',.72);stopCamera();render()}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{const notice=document.getElementById('saveStatus');if(notice)notice.textContent='No se pudo guardar en este navegador. Mantén esta pestaña abierta para continuar.';}}
 function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 function actions(x){return `<div class="nav">${x}</div>`}
-function view(html){app.innerHTML=html;status.textContent=state.screen==='quiz'?`Pregunta ${state.asked.length+1} · máximo ${MAX}`:state.screen==='results'?'Tu mapa de profesiones':'Explora tu futuro';save()}
+let lastView=null;
+function view(html){const viewKey=state.screen+':'+(state.current||'')+':'+(state.screen==='job'?state.job:'');const changed=lastView!==viewKey;lastView=viewKey;document.body.dataset.screen=state.screen;app.innerHTML=html;if(changed){window.scrollTo(0,0);const heading=app.querySelector('h1,h2');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}}status.textContent=state.screen==='quiz'?`Pregunta ${state.asked.length+1} · máximo ${MAX}`:state.screen==='results'?'Tu mapa de profesiones':'Explora tu futuro';save()}
 function countWorld(id){return state.asked.filter(k=>k.startsWith(id+'_')).length}
 function scoreTags(){let scores=Object.fromEntries(interests.map(x=>[x,0]));for(const k of state.asked){const [id,n]=k.split('_'),a=state.answers[k];if(a!==undefined){let t=optionTags[id][a];scores[t[0]]+=2;scores[t[1]]+=1}}return scores}
 function ranking(){let scores=scoreTags(),max=Math.max(1,...Object.values(scores));return jobs.map(job=>{let value=job.tags.reduce((a,t)=>a+scores[t],0)/job.tags.length;return {job,pct:Math.min(99,Math.max(5,Math.round(100*value/max)))}}).sort((a,b)=>b.pct-a.pct||a.job.name.localeCompare(b.job.name))}
@@ -65,7 +1968,8 @@ const leaders=ranking().slice(0,5),top=new Set(leaders.flatMap(x=>x.job.tags));c
 for(const x of available){const tags=optionTags[x.id].flat();const relevant=tags.filter(t=>top.has(t)).length;const novelty=tags.reduce((v,t)=>v+1/(1+scores[t]),0);const value=relevant*1.7+novelty*.7-countWorld(x.id)*.85;if(value>best+.00001){best=value;picks=[x]}else if(Math.abs(value-best)<.00001)picks.push(x)}return picks[Math.floor(Math.random()*picks.length)].key}
 function recordAnswer(){const k=state.current;if(k==null||state.answers[k]===undefined)return;state.asked.push(k);let top=ranking().slice(0,3).map(x=>x.job.id).join(',');state.history.push(top);let last=state.history.slice(-4);state.stable=last.length===4&&last.every(x=>x===last[0])?4:0;state.current=null}
 function eligible(){return state.asked.length>=MIN&&state.order.every(id=>countWorld(id)>=2)&&state.stable===4}
-function advance(){recordAnswer();if(state.asked.length>=MAX||!chooseNext()){state.screen='results';state.finished=true}else if(eligible()){state.screen='checkpoint'}else{state.current=chooseNext();state.screen='reveal'}render()}
+function advance(){if(state.screen!=='quiz'||state.current==null||state.answers[state.current]===undefined)return;recordAnswer();const next=chooseNext();if(state.asked.length>=MAX||!next){state.screen='results';state.finished=true}else if(eligible()&&state.asked.length>=(state.checkpointAt||0)+5){state.checkpointAt=state.asked.length;state.screen='checkpoint'}else{state.current=next;state.screen='quiz'}render()}
+function bindProfessionLinks(returnTo){document.querySelectorAll('[data-job]').forEach(button=>button.onclick=()=>{state.job=+button.dataset.job;state.returnTo=returnTo;state.screen='job';render();});}
 function render(){
 if(state.screen==='catalog'){catalog();return}
 if(state.screen==='welcome'){view(`<section class="panel"><div class="tag">Tu futuro es una aventura</div><h1>¿Qué Pasará? ✨</h1><p>Una aventura inteligente: las preguntas se adaptan a tus intereses. Puedes descubrir resultados a partir de 12 preguntas, y nunca tendrás que responder más de 30.</p>${mapHTML()}<div class="quest-banner">🧭 6 mundos sorpresa · 12–30 desafíos · Cada camino es diferente</div>${actions('<button id="start">¡Comenzar mi aventura! →</button><button class="secondary" id="catalogOpen">📚 Explorar todas las profesiones</button>')}</section>`);document.getElementById('start').onclick=()=>{state.screen='profile';render()};document.getElementById('catalogOpen').onclick=()=>{state.screen='catalog';render()};return}
@@ -76,7 +1980,7 @@ document.querySelectorAll('[data-avatar]').forEach(b=>b.onclick=()=>{stopCamera(
 document.querySelectorAll('[data-generated]').forEach(b=>b.onclick=()=>{state.animeStyle=b.dataset.generated;state.manga=state.mangaOptions[state.animeStyle];render()});
 document.querySelectorAll('[data-anime]').forEach(b=>b.onclick=()=>{state.animeStyle=b.dataset.anime;state.manga=(state.mangaOptions||{})[state.animeStyle]||null;render()});
 document.getElementById('age').onchange=e=>{state.age=+e.target.value;save()};
-document.getElementById('begin').onclick=()=>{stopCamera();let age=state.age,avatar=state.avatar,photo=state.photo,animeStyle=state.animeStyle,manga=state.manga,mangaOptions=state.mangaOptions;state=fresh();state.age=age;state.avatar=avatar;state.photo=photo;state.animeStyle=animeStyle;state.manga=manga;state.mangaOptions=mangaOptions;state.order=shuffle(worlds.map(w=>w.id));state.current=chooseNext();state.screen='reveal';render()};
+document.getElementById('begin').onclick=()=>{stopCamera();let age=state.age,avatar=state.avatar,photo=state.photo,animeStyle=state.animeStyle,manga=state.manga,mangaOptions=state.mangaOptions;state=fresh();state.age=age;state.avatar=avatar;state.photo=photo;state.animeStyle=animeStyle;state.manga=manga;state.mangaOptions=mangaOptions;state.order=shuffle(worlds.map(w=>w.id));state.current=chooseNext();state.screen='quiz';render()};
 document.getElementById('chooseFile').onclick=()=>document.getElementById('photoFile').click();
 document.getElementById('photoFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;if(!f.type.startsWith('image/')){alert('Elige una imagen.');return}try{const img=await createImageBitmap(f);setExplorerPhoto(img);img.close()}catch{alert('No se pudo abrir esa imagen. Prueba con otra.')}};
 document.getElementById('openCamera').onclick=async()=>{const msg=document.getElementById('cameraMessage');if(!navigator.mediaDevices?.getUserMedia){msg.textContent='Este navegador no permite usar la cámara desde aquí. Puedes elegir una foto de tu dispositivo.';return}try{stopCamera();cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});document.getElementById('cameraVideo').srcObject=cameraStream;document.getElementById('cameraArea').classList.remove('hidden');msg.textContent='La cámara está encendida. Pulsa «Hacer foto» cuando quieras.'}catch{msg.textContent='No se pudo abrir la cámara. Comprueba los permisos o utiliza «Elegir foto».'}};
@@ -107,10 +2011,10 @@ function illustratedScene(world,index){
  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" role="img"><rect width="360" height="220" fill="${bg}"/><circle cx="55" cy="42" r="70" fill="#fff" opacity=".28"/><circle cx="328" cy="191" r="76" fill="#fff" opacity=".23"/><ellipse cx="109" cy="207" rx="90" ry="17" fill="#52557b" opacity=".15"/><path d="M27 220q4-81 83-81 76 0 83 81" fill="${['#5b75c5','#e18b6e','#6aaf9a','#9a7bd0'][index%4]}"/><rect x="90" y="125" width="36" height="38" rx="12" fill="#e9a47d"/><ellipse cx="108" cy="91" rx="53" ry="62" fill="#f4b48e"/><path d="M54 91q-7-74 54-76 69-1 57 87l-15-38q-42-15-76 9z" fill="${hair}"/><ellipse cx="88" cy="94" rx="6" ry="9" fill="#313453"/><ellipse cx="132" cy="94" rx="6" ry="9" fill="#313453"/><circle cx="90" cy="92" r="2.5" fill="#fff"/><circle cx="134" cy="92" r="2.5" fill="#fff"/><path d="M95 121q15 13 29 0" stroke="#b76570" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M177 182q27-42 52-36" stroke="#f4b48e" stroke-width="17" fill="none" stroke-linecap="round"/>${prop}</svg>`;
  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
 }
-if(state.screen==='quiz'){if(!state.current)state.current=chooseNext();let key=state.current,[id,n]=key.split('_'),w=worlds.find(x=>x.id===id),q=prompts[id][+n],chosen=state.answers[key],pct=100*state.asked.length/MAX;view(`<section class="panel"><div class="row space"><span class="tag">${w.icon} ${w.name}</span><span class="pill">Pregunta ${state.asked.length+1} · máximo ${MAX}</span></div><div class="progress" role="progressbar" aria-valuenow="${state.asked.length}" aria-valuemin="0" aria-valuemax="${MAX}"><div style="width:${pct}%"></div></div><div class="world-badge">${explorerAvatar()} Preguntas que se adaptan a ti</div><h2 class="question">${esc(q[0])}</h2><p>Elige lo que más te guste. No hay respuestas buenas ni malas.</p><div class="choices scene-grid">${q.slice(1).map((a,i)=>`<button class="choice scene-choice ${chosen===i?'selected':''}" data-opt="${i}" aria-pressed="${chosen===i}"><img class="scene-art" src="${illustratedScene(id,i)}" alt="Ilustración de ${esc(a)}"><span class="scene-label">${esc(a)}</span></button>`).join('')}</div>${actions(`<button id="next" ${chosen===undefined?'disabled':''}>Continuar →</button><button class="secondary" id="save">Guardar progreso</button>`)}</section>`);document.querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>{state.answers[key]=+b.dataset.opt;render()});document.getElementById('next').onclick=advance;document.getElementById('save').onclick=()=>{save();alert('¡Progreso guardado en este navegador!')};return}
-if(state.screen==='checkpoint'){const leaders=ranking().slice(0,3);view(`<section class="panel"><div class="tag">✨ ¡La brújula ha encontrado pistas!</div><h1>¿Quieres ver tus resultados?</h1><p>Has respondido ${state.asked.length} preguntas y hemos explorado los seis mundos. Las primeras profesiones recomendadas llevan varias preguntas manteniéndose en el mismo orden.</p><div class="grid">${leaders.map((r,i)=>`<div class="tile"><span class="tag">#${i+1}</span><h3>${esc(r.job.name)}</h3><div class="score">${r.pct}%</div></div>`).join('')}</div><div class="warning">Estas son afinidades orientativas, no una predicción de tu futuro. Más preguntas pueden descubrir intereses nuevos.</div>${actions('<button id="finish">🎉 Ver mis resultados</button><button class="secondary" id="more">🔎 Quiero descubrir más</button>')}</section>`);document.getElementById('finish').onclick=()=>{state.finished=true;state.screen='results';render()};document.getElementById('more').onclick=()=>{state.current=chooseNext();state.screen='reveal';render()};return}
-if(state.screen==='results'){const ranked=ranking(),total=state.asked.length;view(`<section class="panel"><div class="tag">¡Aventura completada! 🎉</div><div class="confetti" aria-hidden="true">🎉 ⭐ 🎊</div><h1>Tus profesiones por descubrir</h1>${mapHTML(-1,0)}<p>Has respondido <strong>${total} preguntas</strong>. Estos porcentajes son <strong>índices orientativos de afinidad</strong>, no probabilidades científicas de que te guste una profesión.</p><div class="warning">💛 Tus gustos pueden cambiar. ¡Explora también profesiones con puntuación baja!</div><div class="grid">${ranked.slice(0,10).map((r,i)=>`<div class="tile"><span class="tag">#${i+1}</span><h3>${esc(r.job.name)}</h3><div class="score">${r.pct}% de afinidad</div><div class="progress"><div style="width:${r.pct}%"></div></div><p class="small">${esc(r.job.desc)}</p><button data-job="${r.job.id}">Explorar profesión →</button></div>`).join('')}</div><h2>Otras profesiones</h2><div class="grid">${ranked.slice(10).map(r=>`<div class="tile"><h3>${esc(r.job.name)}</h3><p>${r.pct}% de afinidad</p><button class="secondary" data-job="${r.job.id}">Ver ficha</button></div>`).join('')}</div>${actions(`${total<MAX?'<button id="more">🔎 Responder más preguntas</button>':''}<button class="secondary" id="restart">Nueva aventura</button><button class="secondary" id="print">Imprimir resultados</button>`)}</section>`);document.querySelectorAll('[data-job]').forEach(b=>b.onclick=()=>{state.job=+b.dataset.job;state.returnTo='results';state.screen='job';render()});let more=document.getElementById('more');if(more)more.onclick=()=>{state.current=chooseNext();state.screen='reveal';render()};document.getElementById('restart').onclick=()=>{if(confirm('¿Empezar otra aventura? Se sustituirán las respuestas guardadas.')){state=fresh();render()}};document.getElementById('print').onclick=()=>window.print();return}
-if(state.screen==='job'){let job=jobs[state.job],rank=ranking().find(x=>x.job.id===job.id);view(`<section class="panel"><div class="tag">Ficha profesional</div><h1>${esc(job.name)}</h1><div class="score">${rank.pct}% de afinidad orientativa</div>${fullProfile(job)}${actions('<button id="backresults">← Volver</button>')}</section>`);document.getElementById('backresults').onclick=()=>{state.screen=state.returnTo==='catalog'?'catalog':'results';render()};return}}
+if(state.screen==='quiz'){if(!state.current)state.current=chooseNext();let key=state.current,[id,n]=key.split('_'),w=worlds.find(x=>x.id===id),q=prompts[id][+n],chosen=state.answers[key],pct=100*state.asked.length/MAX;view(`<section class="panel"><div class="row space"><span class="tag">${w.icon} ${w.name}</span><span class="pill">Pregunta ${state.asked.length+1} · máximo ${MAX}</span></div><div class="progress" role="progressbar" aria-valuenow="${state.asked.length}" aria-valuemin="0" aria-valuemax="${MAX}"><div style="width:${pct}%"></div></div><div class="world-badge">${explorerAvatar()} Preguntas que se adaptan a ti</div><h2 class="question">${esc(q[0])}</h2><p>Elige lo que más te guste. No hay respuestas buenas ni malas.</p><div class="choices scene-grid">${q.slice(1).map((a,i)=>`<button class="choice scene-choice ${chosen===i?'selected':''}" data-opt="${i}" aria-pressed="${chosen===i}"><img class="scene-art" src="${illustratedScene(id,i)}" alt="Ilustración de ${esc(a)}"><span class="scene-label">${esc(a)}</span></button>`).join('')}</div>${actions(`<button id="next" ${chosen===undefined?'disabled':''}>Continuar →</button><span class="muted small" id="saveStatus" role="status">El progreso se guarda automáticamente</span>`)}</section>`);document.querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>{state.answers[key]=+b.dataset.opt;document.querySelectorAll('[data-opt]').forEach(option=>{const selected=option===b;option.classList.toggle('selected',selected);option.setAttribute('aria-pressed',String(selected));});document.getElementById('next').disabled=false;save();});document.getElementById('next').onclick=advance;return}
+if(state.screen==='checkpoint'){const leaders=ranking().slice(0,3);view(`<section class="panel"><div class="tag">✨ ¡La brújula ha encontrado pistas!</div><h1>¿Quieres ver tus resultados?</h1><p>Has respondido ${state.asked.length} preguntas y hemos explorado los seis mundos. Las primeras profesiones recomendadas llevan varias preguntas manteniéndose en el mismo orden.</p><div class="grid">${leaders.map((r,i)=>`<div class="tile"><span class="tag">#${i+1}</span><h3>${esc(r.job.name)}</h3><div class="score">${r.pct}%</div><p class="small">${esc(r.job.desc)}</p><button type="button" data-job="${r.job.id}">Ver profesión →</button></div>`).join('')}</div><div class="warning">Estas son afinidades orientativas, no una predicción de tu futuro. Más preguntas pueden descubrir intereses nuevos.</div>${actions('<button id="finish">🎉 Ver mis resultados</button><button class="secondary" id="more">🔎 Quiero descubrir más</button>')}</section>`);bindProfessionLinks('checkpoint');document.getElementById('finish').onclick=()=>{state.finished=true;state.screen='results';render()};document.getElementById('more').onclick=()=>{state.current=chooseNext();state.screen='quiz';render()};return}
+if(state.screen==='results'){const ranked=ranking(),total=state.asked.length;view(`<section class="panel"><div class="tag">¡Aventura completada! 🎉</div><div class="confetti" aria-hidden="true">🎉 ⭐ 🎊</div><h1>Tus profesiones por descubrir</h1>${mapHTML(-1,0)}<p>Has respondido <strong>${total} preguntas</strong>. Estos porcentajes son <strong>índices orientativos de afinidad</strong>, no probabilidades científicas de que te guste una profesión.</p><div class="warning">💛 Tus gustos pueden cambiar. ¡Explora también profesiones con puntuación baja!</div><div class="grid">${ranked.slice(0,10).map((r,i)=>`<div class="tile"><span class="tag">#${i+1}</span><h3>${esc(r.job.name)}</h3><div class="score">${r.pct}% de afinidad</div><div class="progress"><div style="width:${r.pct}%"></div></div><p class="small">${esc(r.job.desc)}</p><button data-job="${r.job.id}">Explorar profesión →</button></div>`).join('')}</div><h2>Otras profesiones</h2><div class="grid">${ranked.slice(10).map(r=>`<div class="tile"><h3>${esc(r.job.name)}</h3><p>${r.pct}% de afinidad</p><button class="secondary" data-job="${r.job.id}">Ver ficha</button></div>`).join('')}</div>${actions(`${total<MAX?'<button id="more">🔎 Responder más preguntas</button>':''}<button class="secondary" id="restart">Nueva aventura</button><button class="secondary" id="print">Imprimir resultados</button>`)}</section>`);bindProfessionLinks('results');let more=document.getElementById('more');if(more)more.onclick=()=>{state.current=chooseNext();state.screen='quiz';render()};document.getElementById('restart').onclick=()=>{if(confirm('¿Empezar otra aventura? Se sustituirán las respuestas guardadas.')){state=fresh();render()}};document.getElementById('print').onclick=()=>window.print();return}
+if(state.screen==='job'){let job=jobs[state.job],rank=ranking().find(x=>x.job.id===job.id);view(`<section class="panel"><div class="tag">Ficha profesional</div><h1>${esc(job.name)}</h1><div class="score">${rank.pct}% de afinidad orientativa</div>${fullProfile(job)}${actions('<button id="backresults">← Volver</button>')}</section>`);document.getElementById('backresults').onclick=()=>{state.screen=['catalog','checkpoint','results'].includes(state.returnTo)?state.returnTo:'results';render()};return}}
 document.getElementById('reset').onclick=()=>{if(confirm('¿Borrar el progreso guardado y empezar desde cero?')){state=fresh();render()}};render();
 </script></body></html>
 

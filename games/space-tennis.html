@@ -1,156 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-	<title>finvernot - Tenis Espacial</title>
-	<style>
-		/* --- Estilo del juego --- */
-		body {
-			margin: 0;
-			background-color: #000; /* fondo negro tipo espacio */
-			color: #fff;
-			font-family: Arial, sans-serif;
-			overflow: hidden;
-			text-align: center;
-		}
-
-		canvas {
-			background-color: #000;
-			display: block;
-			margin: 20px auto;
-			border: 2px solid #fff;
-		}
-
-		h1, p {
-			margin: 5px;
-		}
-	</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080e22">
+<title>Tenis Espacial 3D · Familia Invernot</title>
 <link rel="stylesheet" href="../assets/navigation.css">
+<link rel="stylesheet" href="../assets/games/game.css">
 </head>
-<body>
-<a class="invernot-home" href="../index.html" aria-label="Volver al índice de la Familia Invernot">← Volver al inicio</a>
-
-<h1>finvernot - Tenis Espacial</h1>
-<p id="score">Jugador: 0 | Oponente: 0 | Nivel: 1</p>
-<canvas id="gameCanvas" width="600" height="400"></canvas>
-
-<script>
-	// --- Variables del juego ---
-	const canvas = document.getElementById('gameCanvas');
-	const ctx = canvas.getContext('2d');
-
-	const paddleWidth = 20;
-	const paddleHeight = 80;
-	let playerY = canvas.height/2 - paddleHeight/2;
-	let computerY = canvas.height/2 - paddleHeight/2;
-	const paddleSpeed = 5;
-
-	let ballX = canvas.width/2;
-	let ballY = canvas.height/2;
-	let ballRadius = 10;
-	let ballSpeedX = 4;
-	let ballSpeedY = 3;
-
-	let playerScore = 0;
-	let computerScore = 0;
-	let level = 1;
-
-	// --- Control del jugador ---
-	let upPressed = false;
-	let downPressed = false;
-
-	document.addEventListener("keydown", (e) => {
-		if(e.key === "ArrowUp") upPressed = true;
-		if(e.key === "ArrowDown") downPressed = true;
-	});
-
-	document.addEventListener("keyup", (e) => {
-		if(e.key === "ArrowUp") upPressed = false;
-		if(e.key === "ArrowDown") downPressed = false;
-	});
-
-	// --- Función para dibujar el juego ---
-	function draw() {
-		// Fondo espacial con estrellas
-		ctx.fillStyle = "#000";
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-		for(let i=0; i<50; i++){
-			ctx.fillStyle = "#fff";
-			ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height, 2, 2);
-		}
-
-		// Dibujar naves (barras)
-		ctx.fillStyle = "#0ff";
-		ctx.fillRect(0, playerY, paddleWidth, paddleHeight); // jugador
-		ctx.fillStyle = "#f0f";
-		ctx.fillRect(canvas.width - paddleWidth, computerY, paddleWidth, paddleHeight); // oponente
-
-		// Dibujar meteorito (pelota)
-		ctx.fillStyle = "#ff0";
-		ctx.beginPath();
-		ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
-		ctx.fill();
-	}
-
-	// --- Función para mover el juego ---
-	function update() {
-		// Movimiento del jugador
-		if(upPressed && playerY > 0) playerY -= paddleSpeed;
-		if(downPressed && playerY < canvas.height - paddleHeight) playerY += paddleSpeed;
-
-		// Movimiento de la computadora simple
-		if(computerY + paddleHeight/2 < ballY) computerY += paddleSpeed-1;
-		if(computerY + paddleHeight/2 > ballY) computerY -= paddleSpeed-1;
-
-		// Movimiento de la pelota
-		ballX += ballSpeedX;
-		ballY += ballSpeedY;
-
-		// Rebote en la parte superior e inferior
-		if(ballY + ballRadius > canvas.height || ballY - ballRadius < 0){
-			ballSpeedY = -ballSpeedY;
-		}
-
-		// Rebote en las naves (barras)
-		if(ballX - ballRadius < paddleWidth && ballY > playerY && ballY < playerY + paddleHeight){
-			ballSpeedX = -ballSpeedX;
-		}
-		if(ballX + ballRadius > canvas.width - paddleWidth && ballY > computerY && ballY < computerY + paddleHeight){
-			ballSpeedX = -ballSpeedX;
-		}
-
-		// Puntuación
-		if(ballX < 0){
-			computerScore++;
-			resetBall();
-		}
-		if(ballX > canvas.width){
-			playerScore++;
-			resetBall();
-		}
-
-		// Actualizar nivel y mostrar puntuación
-		level = Math.floor((playerScore + computerScore)/3) + 1;
-		document.getElementById("score").textContent = `Jugador: ${playerScore} | Oponente: ${computerScore} | Nivel: ${level}`;
-	}
-
-	// --- Función para reiniciar la pelota ---
-	function resetBall(){
-		ballX = canvas.width/2;
-		ballY = canvas.height/2;
-		ballSpeedX = 4 + level - 1; // aumenta velocidad con nivel
-		ballSpeedY = 3 + level - 1;
-	}
-
-	// --- Bucle principal ---
-	function gameLoop(){
-		update();
-		draw();
-		requestAnimationFrame(gameLoop);
-	}
-
-	gameLoop();
-</script>
+<body data-game="tennis">
+<p id="loading">Cargando Tenis Espacial 3D…</p>
+<a class="invernot-home" href="../index.html">← Volver al inicio</a>
+<script src="../assets/games/arcade.bundle.js" defer></script>
+<noscript>Activa JavaScript para jugar.</noscript>
 </body>
 </html>

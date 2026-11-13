@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#a5dff5">
+<title>Fun Race 3D · Familia Invernot</title>
+<link rel="stylesheet" href="../assets/navigation.css">
+<link rel="stylesheet" href="../assets/games/fun-race.css">
+</head>
+<body>
+<canvas id="game" tabindex="0" aria-label="Pista de Fun Race 3D. Mantén Espacio o W para correr; usa A y D o las flechas para esquivar."></canvas>
+<header id="hud"><div class="race-info">
+<h1>🏁 Fun Race 3D · Nivel <span id="level">1</span></h1>
+<div class="race-stats"><span>Posición <span id="position">1 / 3</span></span><span id="time">0:00.0</span><span>Golpes <span id="hits">0</span></span><span id="checkpoints">Control 0 / 10</span></div>
+<div id="bar" role="progressbar" aria-label="Recorrido completado" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress"></div></div>
+<p id="upcoming"></p><div id="run-state"></div></div>
+<button id="pause" type="button" aria-label="Pausar carrera" disabled>Pausa</button></header>
+<div id="controls" role="group" aria-label="Controles de carrera"><div class="steering"><button data-hold="left" type="button" aria-label="Mover a la izquierda" aria-pressed="false">◀</button><button data-hold="right" type="button" aria-label="Mover a la derecha" aria-pressed="false">▶</button></div><button id="run" data-hold="run" type="button" aria-label="Mantén pulsado para correr" aria-pressed="false">Mantén 🏃</button></div>
+<div id="keyboard-hint">Espacio / W / ↑: correr · A D / ← →: esquivar · P / Esc: pausa</div>
+<div id="countdown" hidden></div><div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+<div id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><section id="card" class="card"><h2 id="dialog-title">Cargando carrera…</h2></section></div>
+<a class="invernot-home" href="../index.html">← Volver al inicio</a>
+<div id="error" hidden role="alert"><h1>No se ha podido iniciar la carrera</h1><p id="error-message">Falta uno de los archivos locales del juego. Vuelve al inicio y abre la carrera de nuevo.</p><p><a href="../index.html">Volver al inicio</a> <button type="button" onclick="location.reload()">Recargar</button></p></div>
+<noscript>Activa JavaScript para jugar a Fun Race 3D.</noscript>
+<script src="../assets/vendor/three/three.global.js" onerror="document.getElementById('error').hidden=false"></script>
+<script src="../assets/games/fun-race-rules.js" onerror="document.getElementById('error').hidden=false"></script>
+<script src="../assets/games/fun-race.js" onerror="document.getElementById('error').hidden=false"></script>
+</body>
+</html>
